@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0 http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<archetypes>
+		<archetype>
+			<groupId>jp.seraphyware.javafxexample</groupId>
+			<artifactId>jfxappskeleton</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<description>jfxappskeleton</description>
+			<repository>https://raw.github.com/seraphy/JavaFXAppSkeleton/master/mvnrepo</repository>
+		</archetype>
+	</archetypes>
+</archetype-catalog>
