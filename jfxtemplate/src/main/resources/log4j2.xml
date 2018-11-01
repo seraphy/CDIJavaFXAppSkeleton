@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<RollingFile name="File"
+			fileName="${sys:AppLogFilePath}\\app.log"
+			filePattern="${sys:AppLogFilePath}\\app-%i.log">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+	</Appenders>
+	<Loggers>
+		<!-- RawFileReaderのBridgeのINFOログは大量に出るのでWARNだけにしておく -->
+		<Logger name="jnabridge" level="WARN" />
+
+		<!-- sun.rmi.*は、SLF4JBridgeHandlerからブリッジされた
+			JavaUtilsLoggerのロガーの内容となっており、ここで出力を制御できる.
+			(SLF4JBridgeHandler側からブリッジされていないロガーについては、
+			ここで設定しても何も起こらないので注意のこと.)
+		-->
+		<Logger name="sun.rmi.server.call" level="INFO" additivity="false">
+			<AppenderRef ref="File" />
+		</Logger>
+		<Logger name="sun.rmi.transport" level="INFO" additivity="false">
+			<AppenderRef ref="File" />
+		</Logger>
+		<Logger name="sun.rmi" level="INFO" additivity="false">
+			<AppenderRef ref="File" />
+		</Logger>
+
+		<Root level="Debug">
+			<AppenderRef ref="Console" level="${sys:ConsoleLogLevel}"/>
+			<AppenderRef ref="File" level="${sys:FileLogLevel}"/>
+		</Root>
+	</Loggers>
+</Configuration>
