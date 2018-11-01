@@ -84,7 +84,7 @@ public class AboutController extends AbstractWindowController implements Initial
 	protected void makeRoot() {
 		FXMLLoader ldr = ldrProvider.get();
 		try {
-			URL url = getClass().getResource("About.fxml"); //$NON-NLS-1$
+			URL url = getClass().getResource("/ui/About.fxml"); //$NON-NLS-1$
 			assert url != null;
 
 			ldr.setLocation(url);

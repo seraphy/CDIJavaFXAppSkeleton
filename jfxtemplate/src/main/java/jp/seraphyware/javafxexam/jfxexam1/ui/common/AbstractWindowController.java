@@ -156,10 +156,10 @@ public abstract class AbstractWindowController extends AbstractDocumentControlle
 		// アイコンの設定 (最適なサイズが選択される)
 		Class<?> cls = AbstractWindowController.class;
 		stage.getIcons().addAll(Arrays.asList(
-				new Image(cls.getResourceAsStream("icon.png")),
-				new Image(cls.getResourceAsStream("icon48.png")),
-				new Image(cls.getResourceAsStream("icon32.png")),
-				new Image(cls.getResourceAsStream("icon16.png"))));
+				new Image(cls.getResourceAsStream("/ui/common/icon.png")),
+				new Image(cls.getResourceAsStream("/ui/common/icon48.png")),
+				new Image(cls.getResourceAsStream("/ui/common/icon32.png")),
+				new Image(cls.getResourceAsStream("/ui/common/icon16.png"))));
 
 		return stage;
 	}

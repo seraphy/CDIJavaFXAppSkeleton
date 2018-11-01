@@ -50,7 +50,7 @@ public class Page2Controller extends AbstractDocumentController implements Initi
 	protected void makeRoot() {
 		FXMLLoader ldr = ldrProvider.get();
 		try {
-			URL url = getClass().getResource("Page2.fxml"); //$NON-NLS-1$
+			URL url = getClass().getResource("/ui/inner/Page2.fxml"); //$NON-NLS-1$
 			assert url != null;
 
 			ldr.setLocation(url);

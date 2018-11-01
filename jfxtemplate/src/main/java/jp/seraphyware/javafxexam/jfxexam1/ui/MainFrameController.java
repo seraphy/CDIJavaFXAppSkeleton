@@ -95,7 +95,7 @@ public class MainFrameController extends AbstractWindowController {
 		FXMLLoader ldr = ldrProvider.get();
 		try {
 			ldr.setController(this);
-			ldr.setLocation(getClass().getResource("MainFrame.fxml")); //$NON-NLS-1$
+			ldr.setLocation(getClass().getResource("/ui/MainFrame.fxml")); //$NON-NLS-1$
 
 			try {
 				root = ldr.load();
