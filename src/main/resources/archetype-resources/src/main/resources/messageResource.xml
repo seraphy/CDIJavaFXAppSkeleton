@@ -1,0 +1,23 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="close">Close</entry>
+<entry key="file">File</entry>
+<entry key="pages">ページ</entry>
+<entry key="pages.page1">page1</entry>
+<entry key="pages.page2">page2</entry>
+<entry key="page1.menu">page1 menu</entry>
+<entry key="page1.menu.clear">Clear</entry>
+<entry key="system">System</entry>
+<entry key="about">About</entry>
+<entry key="fontSetting">Font Setting</entry>
+<entry key="application.title">My JavaFX Application Skeleton</entry>
+<entry key="mainFrame.initialText">no-data</entry>
+<entry key="mainFrame.closeConfirm">Are you sure you want to exit the application?</entry>
+<entry key="about.title">About</entry>
+<entry key="about.resourceName">docs/about.html</entry>
+<entry key="sysprops.title">System Properties/Environmenets</entry>
+</properties>

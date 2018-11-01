@@ -1,0 +1,22 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="close">閉じる</entry>
+<entry key="file">ファイル</entry>
+<entry key="pages">ページ</entry>
+<entry key="pages.page1">ページ1</entry>
+<entry key="pages.page2">ページ2</entry>
+<entry key="page1.menu">ページ1</entry>
+<entry key="page1.menu.clear">クリア</entry>
+<entry key="system">システム</entry>
+<entry key="fontSetting">フォントの設定</entry>
+<entry key="about">このアプリケーションについて</entry>
+<entry key="about.resourceName">docs/about_ja.html</entry>
+<entry key="about.title">このアプリケーションについて</entry>
+<entry key="sysprops.title">システムプロパティと環境変数</entry>
+<entry key="mainFrame.initialText">データなし</entry>
+<entry key="mainFrame.closeConfirm">アプリケーションを終了してもよろしいですか？</entry>
+</properties>

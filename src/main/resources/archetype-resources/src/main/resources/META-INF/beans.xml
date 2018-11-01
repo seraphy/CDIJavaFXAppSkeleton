@@ -1,0 +1,13 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+       bean-discovery-mode="annotated">
+
+	<!-- http://docs.jboss.org/weld/reference/latest/en-US/html/environments.html${symbol_pound}_java_se -->
+	<decorators>
+		<class>org.jboss.weld.environment.se.threading.RunnableDecorator</class>
+	</decorators>
+</beans>
