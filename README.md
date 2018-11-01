@@ -1,6 +1,35 @@
 # JavaFXアプリケーションスケルトン作成アーキタイプ
 
-## ビルド方法
+## 利用方法
+
+MavenでGenerateするまえに、以下のURLからアーキタイプのカタログを参照する。
+
+```
+https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archtype-catalog.xml
+```
+
+このアーキタイプのリポジトリはgithub上にあるが、このカタログによりGithub上のリポジトリを参照・取得するようになっている。
+
+このアーキタイプのグループID, アーティファクトIDは以下のようになっている。
+
+| name                | value                        |
+|:--------------------|:-----------------------------|
+| archetypeGroupId    | jp.seraphyware.javafxexample |
+| archetypeArtifactId | jfxappskeleton               |
+| archetypeVersion    | 0.0.1-SNAPSHOT               |
+
+### コマンドラインから生成する場合
+
+以下のようにアーキタイプのGroupId, ArtifactId, Versionを指定してスケルトンを生成する。
+
+```shell
+mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT
+```
+
+
+## このアーキタイプのローカルでのビルド方法
+
+このアーキタイプ自身をビルドする場合、
 
 ```shell
 mvn clean install archetype:update-local-catalog -U
@@ -28,13 +57,6 @@ mvn archetype:crawl
 
 http://maven.apache.org/archetype/maven-archetype-plugin/crawl-mojo.html
 
-## このアーキタイプの利用方法
-
-以下のようにアーキタイプのGroupId, ArtifactId, Versionを指定してスケルトンを生成する。
-
-```shell
-mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT
-```
 
 ## 参考
 
