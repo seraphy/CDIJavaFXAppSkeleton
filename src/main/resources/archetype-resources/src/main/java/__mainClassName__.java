@@ -1,12 +1,12 @@
-package ${groupId};
+package ${package};
 
-import ${groupId}.util.*;
+import ${package}.util.*;
 
 /**
  * アプリケーションエントリ
  * @param args
  */
-public class Main {
+public class ${mainClassName} {
 	public static void main(String[] args) {
 		MyBeans myBeans = new MyBeans();
 		myBeans.setName("Foo");

@@ -15,10 +15,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<mainClassFQCN>${package}.${mainClassName}</mainClassFQCN>
+		<exename>${mainClassName}.exe</exename>
 	</properties>
 
 	<build>
 		<plugins>
+			<!-- コンパイラ -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -27,6 +30,76 @@
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
 				</configuration>
+			</plugin>
+			<!-- 依存パッケージへのクラスパスとメインクラスのあるMANIFESTをもつJARの作成 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<finalName>${project.artifactId}</finalName>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib</classpathPrefix>
+							<mainClass>${mainClassFQCN}</mainClass>
+						</manifest>
+						<manifestEntries>
+							<!-- 起動時のスプラッシュ画像 <SplashScreen-Image>splash-image.png</SplashScreen-Image> -->
+							<!-- <Implementation-Vendor><![CDATA[Copyright xxxxxx]]></Implementation-Vendor>  -->
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- 依存するパッケージをlibフォルダに出力する -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeScope>runtime</includeScope>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Launch4jによるjarファイルのexe化を行う. http://launch4j.sourceforge.net/docs.html -->
+				<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
+				<artifactId>launch4j-plugin</artifactId>
+				<version>1.5.0.0</version>
+				<executions>
+					<execution>
+						<id>l4j-gui</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<outfile>target/${exename}</outfile>
+							<jar>target/${project.artifactId}.jar</jar>
+							<errTitle>Failed to execute the ${exename}</errTitle>
+							<icon>app.ico</icon>
+							<jre>
+								<path>jre</path>
+								<minVersion>1.8.0_40</minVersion>
+								<initialHeapSize>64</initialHeapSize>
+								<maxHeapSize>64</maxHeapSize>
+							</jre>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

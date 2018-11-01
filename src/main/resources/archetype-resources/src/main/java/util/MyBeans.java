@@ -1,4 +1,4 @@
-package ${groupId}.util;
+package ${package}.util;
 
 /**
  * マイビーン
