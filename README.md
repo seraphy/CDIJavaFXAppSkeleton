@@ -1,4 +1,4 @@
-# JavaFXアプリケーションスケルトン作成アーキタイプ
+# JavaFXアプリケーションのスケルトンを作成するアーキタイプ
 
 ## 利用方法
 
@@ -18,6 +18,9 @@ https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archt
 | archetypeArtifactId | jfxappskeleton               |
 | archetypeVersion    | 0.0.1-SNAPSHOT               |
 
+### EclipseからMavenプロジェクトとして新規作成する場合
+
+上記の `archtype-catalog.xml` のURLをカタログのURLとして追加すれば、利用可能になる。
 
 ### コマンドラインから生成する場合
 
@@ -26,6 +29,75 @@ https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archt
 ```shell
 mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT
 ```
+
+ただし、まだローカルマシン上の `~/.m2/repository` にアーキタイプが格納されておらず、`archtype-catalog.xml` も存在しない場合は、以下のいずれかの方法をとる。
+
+- 明示的に `archtype-catalog.xml` を追記する
+- 明示的にarchtypeが格納されているリポジトリを指定する
+
+### 明示的に `archtype-catalog.xml` を追記する場合
+
+上記のカタログのURLから取得されるカタログ定義を、ローカルマシンの `~/.m2/repository/archtype-catalog.xml` に追記する。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0 http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<archetypes>
+		<archetype>
+			<groupId>jp.seraphyware.javafxexample</groupId>
+			<artifactId>jfxappskeleton</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<description>jfxappskeleton</description>
+			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/</repository>
+		</archetype>
+	</archetypes>
+</archetype-catalog>
+```
+
+これでアーキタイプの検索ができるようになる。
+
+
+### 明示的にリポジトリを指定する場合
+
+以下のようなmavenの設定ファイルを作成する。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings
+    xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+        <profile>
+            <id>local-development</id>
+            <repositories>
+                <repository>
+                    <id>javafxappskeletonrepo</id>
+                    <name>javafxappskeletonrepo</name>
+                    <url>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>local-development</activeProfile>
+    </activeProfiles>
+</settings>
+```
+
+このファイルを作業フォルダ上に `settings.xml` として作成した場合は、
+
+```shell
+mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT -s settings.xml
+```
+
+のように設定ファイルへのパスを明示して、archtypeが格納されたリポジトリにアクセスすることができる。
+
+また、このようにして一度使用すると、`~/.m2/repository` にキャッシュされる。
+
+カタログは作成されていないが、次からは設定ファイルを指定せずとも、ローカル上にキャッシュされたものを参照できるようになる。
+
 
 ### ローカルリポジトリ上の利用可能なアーキタイプのカタログを一括更新する場合は...
 
@@ -74,13 +146,23 @@ https://maven.apache.org/archetype/maven-archetype-plugin/update-local-catalog-m
 
 ## 既存のプロジェクトをもとに、アーキタイプ用のひな形を作成する方法
 
+本アーキタイプは、`jfxtemplate` フォルダ下にある、eclipseによるJavaFX8アプリケーションのプロジェクトをもとに、テンプレートを作成している。
+
+元にしたいプロジェクト下において以下のようにすると、
+
 ```shell
 mvn clean archetype:create-from-project
 ```
 
 これにより、`target` ディレクトリ下に archtype のひな形が作成される。
 
-ソースコード上の `package` などは `${package}` のように置換されており、フォルダ構造も短く補正される。
+ソースコード上の `package` などは `${package}` のように置換され、フォルダ構造も短く補正されており、
+archtypeに必要なメタデータなども生成されるので、これを元に手直することでテンプレートを作成する。
+
+
+なお、本アーキタイプでは、シェルスクリプト `preparetmpl.sh` を cygwin上から実行することで、これらの雑多な処理をまとめて実行して構築している。
+
+実際の生成手順については、このシェルスクリプトを参照のこと。
 
 
 ### カスタムプロパティ定義の作成
