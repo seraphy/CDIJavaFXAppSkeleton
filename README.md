@@ -5,7 +5,7 @@
 MavenでGenerateするまえに、以下のURLからアーキタイプのカタログを参照する。
 
 ```
-https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archtype-catalog.xml
+https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/jfx11/mvnrepo/archtype-catalog.xml
 ```
 
 このアーキタイプのリポジトリはgithub上にあるが、このカタログによりGithub上のリポジトリを参照・取得するようになっている。
@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archt
 |:--------------------|:-----------------------------|
 | archetypeGroupId    | jp.seraphyware.javafxexample |
 | archetypeArtifactId | jfxappskeleton               |
-| archetypeVersion    | 0.0.1-SNAPSHOT               |
+| archetypeVersion    | 0.0.2                        |
 
 ### EclipseからMavenプロジェクトとして新規作成する場合
 
@@ -27,7 +27,7 @@ https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/archt
 以下のようにアーキタイプのGroupId, ArtifactId, Versionを指定してスケルトンを生成する。
 
 ```shell
-mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT
+mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.2 -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT
 ```
 
 ただし、まだローカルマシン上の `~/.m2/repository` にアーキタイプが格納されておらず、`archtype-catalog.xml` も存在しない場合は、以下のいずれかの方法をとる。
@@ -48,9 +48,9 @@ mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -Darchety
 		<archetype>
 			<groupId>jp.seraphyware.javafxexample</groupId>
 			<artifactId>jfxappskeleton</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2</version>
 			<description>jfxappskeleton</description>
-			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/</repository>
+			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/jfx11/mvnrepo/</repository>
 		</archetype>
 	</archetypes>
 </archetype-catalog>
@@ -75,7 +75,7 @@ mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -Darchety
                 <repository>
                     <id>javafxappskeletonrepo</id>
                     <name>javafxappskeletonrepo</name>
-                    <url>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/</url>
+                    <url>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/jfx11/mvnrepo/</url>
                 </repository>
             </repositories>
         </profile>
@@ -89,7 +89,7 @@ mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -Darchety
 このファイルを作業フォルダ上に `settings.xml` として作成した場合は、
 
 ```shell
-mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.1-SNAPSHOT -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT -s settings.xml
+mvn archetype:generate -DarchetypeGroupId=jp.seraphyware.javafxexample -DarchetypeArtifactId=jfxappskeleton -DarchetypeVersion=0.0.2 -DgroupId=jp.seraphyware.mvnexam -DartifactId=jfxapp -Dversion=1.0.0-SNAPSHOT -s settings.xml
 ```
 
 のように設定ファイルへのパスを明示して、archtypeが格納されたリポジトリにアクセスすることができる。

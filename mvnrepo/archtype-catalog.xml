@@ -9,7 +9,14 @@
 			<artifactId>jfxappskeleton</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<description>jfxappskeleton</description>
-			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/master/mvnrepo/</repository>
+			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/jfx11/mvnrepo/</repository>
+		</archetype>
+		<archetype>
+			<groupId>jp.seraphyware.javafxexample</groupId>
+			<artifactId>jfxappskeleton</artifactId>
+			<version>0.0.2</version>
+			<description>jfxappskeleton</description>
+			<repository>https://raw.githubusercontent.com/seraphy/JavaFXAppSkeleton/jfx11/mvnrepo/</repository>
 		</archetype>
 	</archetypes>
 </archetype-catalog>

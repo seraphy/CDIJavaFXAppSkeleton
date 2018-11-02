@@ -45,7 +45,7 @@
     <fileSet filtered="true" encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>.classpath</include>
+        <include>run.bat</include><include>README.md</include>
         <include>.project</include>
         <include>archtype.properties</include>
       </includes>
@@ -55,7 +55,8 @@
       <includes>
         <include>.gitignore</include>
         <include>app.ico</include>
-        <include>README.md</include>
+        
+        
       </includes>
     </fileSet>
   </fileSets>
