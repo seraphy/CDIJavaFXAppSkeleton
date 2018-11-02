@@ -13,14 +13,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mainClassFQCN>jp.seraphyware.javafxexam.jfxexam1.MainApp</mainClassFQCN>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<mainClassFQCN>jp.seraphyware.javafxexam.jfxexam1.MainApp</mainClassFQCN>
-		<deltaspike.version>1.7.1</deltaspike.version>
-		<weld.version>2.3.5.Final</weld.version>
+		<deltaspike.version>1.8.1</deltaspike.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<log4j2.version>2.4.1</log4j2.version>
-		<exename>${project.artifactId}.exe</exename>
+		<openjfx.version>11</openjfx.version>
 	</properties>
 
 	<build>
@@ -30,10 +29,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
 			</plugin>
 			<!-- 依存パッケージへのクラスパスとメインクラスのあるMANIFESTをもつJARの作成 -->
 			<plugin>
@@ -50,12 +45,12 @@
 						</manifest>
 						<manifestEntries>
 							<!-- 起動時のスプラッシュ画像 <SplashScreen-Image>splash-image.png</SplashScreen-Image> -->
-							<!-- <Implementation-Vendor><![CDATA[Copyright xxxxxx]]></Implementation-Vendor>  -->
+							<!-- <Implementation-Vendor><![CDATA[Copyright xxxxxx]]></Implementation-Vendor> -->
 						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
-			<!-- 依存するパッケージをlibフォルダに出力する -->
+			<!-- 依存するパッケージ(無名パッケージ)をlibフォルダに出力する -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -73,34 +68,24 @@
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
+							<!-- JavaFXはモジュール用フォルダに格納する -->
+							<excludeGroupIds>org.openjfx</excludeGroupIds>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<!-- Launch4jによるjarファイルのexe化を行う. http://launch4j.sourceforge.net/docs.html -->
-				<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
-				<artifactId>launch4j-plugin</artifactId>
-				<version>1.5.0.0</version>
-				<executions>
 					<execution>
-						<id>l4j-gui</id>
-						<phase>package</phase>
+						<id>copy-dependencies-mods</id>
+						<phase>prepare-package</phase>
 						<goals>
-							<goal>launch4j</goal>
+							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<headerType>gui</headerType>
-							<outfile>target/${exename}</outfile>
-							<jar>target/${project.artifactId}.jar</jar>
-							<errTitle>Failed to execute the ${exename}</errTitle>
-							<icon>app.ico</icon>
-							<jre>
-								<path>jre</path>
-								<minVersion>1.8.0_40</minVersion>
-								<initialHeapSize>64</initialHeapSize>
-								<maxHeapSize>64</maxHeapSize>
-							</jre>
+							<includeScope>runtime</includeScope>
+							<outputDirectory>${project.build.directory}/mods</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<!-- JavaFXはモジュール用フォルダに格納する -->
+							<includeGroupIds>org.openjfx</includeGroupIds>
 						</configuration>
 					</execution>
 				</executions>
@@ -109,12 +94,30 @@
 	</build>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${openjfx.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${openjfx.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>${openjfx.version}</version>
+		</dependency>
+
 		<!-- controlsfx -->
 		<dependency>
 			<groupId>org.controlsfx</groupId>
 			<artifactId>controlsfx</artifactId>
-			<version>8.40.14</version>
-			<!-- <version>9.0.0</version> -->
+			<version>9.0.0</version>
 		</dependency>
 
 		<!-- commons lang3 -->
@@ -122,13 +125,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.8.1</version>
-		</dependency>
-
-		<!-- CDI標準アノテーションなど -->
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.2</version>
 		</dependency>
 
 		<!-- DeltaSpike -->
@@ -153,12 +149,29 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- JBoss WELD (Diコンテナ本体) -->
+
+		<!-- CDI標準アノテーションなど -->
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jboss.weld.se</groupId>
-			<artifactId>weld-se</artifactId>
-			<version>${weld.version}</version>
+			<artifactId>weld-se-shaded</artifactId>
+			<version>3.0.5.Final</version>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Common Annotations for the Java Platform https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
+			(@PostConstructなどのアノテーションの定義) -->
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- DeltaSpikeとWeldの連携 -->
@@ -231,13 +244,6 @@
 			<version>${log4j2.version}</version>
 		</dependency>
 
-		<!-- EJB3のAPI(使わないけどWeldからチェックされるため) -->
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<version>3.0</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -253,4 +259,51 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>launch4j</id>
+			<activation>
+				<jdk>(,1.8]</jdk>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<exename>${project.artifactId}.exe</exename>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- Launch4jによるjarファイルのexe化を行う. http://launch4j.sourceforge.net/docs.html -->
+						<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
+						<artifactId>launch4j-plugin</artifactId>
+						<version>1.5.0.0</version>
+						<executions>
+							<execution>
+								<id>l4j-gui</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>target/${exename}</outfile>
+									<jar>target/${project.artifactId}.jar</jar>
+									<errTitle>Failed to execute the ${exename}</errTitle>
+									<icon>app.ico</icon>
+									<jre>
+										<path>jre</path>
+										<minVersion>1.8.0_40</minVersion>
+										<initialHeapSize>64</initialHeapSize>
+										<maxHeapSize>64</maxHeapSize>
+									</jre>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

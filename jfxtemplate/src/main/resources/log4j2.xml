@@ -20,9 +20,6 @@
 
 	</Appenders>
 	<Loggers>
-		<!-- RawFileReaderのBridgeのINFOログは大量に出るのでWARNだけにしておく -->
-		<Logger name="jnabridge" level="WARN" />
-
 		<!-- sun.rmi.*は、SLF4JBridgeHandlerからブリッジされた
 			JavaUtilsLoggerのロガーの内容となっており、ここで出力を制御できる.
 			(SLF4JBridgeHandler側からブリッジされていないロガーについては、
