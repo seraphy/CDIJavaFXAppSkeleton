@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane fx:id="root" prefHeight="800.0"
+	prefWidth="1000.0" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<MenuBar fx:id="menuBar">
+			<menus>
+				<Menu text="%file">
+					<items>
+						<MenuItem onAction="#onFileClose" text="%close" />
+					</items>
+				</Menu>
+				<Menu text="%pages">
+					<items>
+						<MenuItem onAction="#onPage1" text="%pages.page1" />
+						<MenuItem onAction="#onPage2" text="%pages.page2" />
+					</items>
+				</Menu>
+				<Menu text="%system">
+					<items>
+						<MenuItem onAction="#onFontSetting" text="%fontSetting" />
+						<MenuItem onAction="#onAbout" text="%about" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+	<center>
+		<StackPane prefHeight="150.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label text="%mainFrame.initialText" textFill="#888888">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+			</children>
+		</StackPane>
+	</center>
+</BorderPane>
